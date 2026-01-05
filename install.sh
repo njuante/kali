@@ -152,17 +152,14 @@ cp -r "$SCRIPT_DIR/config/neofetch/"* "$USER_HOME/.config/neofetch/"
 cp "$SCRIPT_DIR/scripts/"* "$USER_HOME/.local/bin/"
 
 # Copiar wallpapers
-cp "$SCRIPT_DIR/wallpapers/"* "$USER_HOME/wallpapers/" 2>/dev/null || true
+cp "$SCRIPT_DIR/"*.jpg "$USER_HOME/wallpapers/" 2>/dev/null || true
+echo -e "${GREEN}[+] Wallpapers copiados${NC}"
 
 # Hacer ejecutables los scripts
 chmod +x "$USER_HOME/.config/bspwm/bspwmrc"
 chmod +x "$USER_HOME/.config/polybar/launch.sh"
-chmod +x "$USER_HOME/.config/polybar/scripts/"*
-chmod +x "$USER_HOME/.local/bin/"*
-
-echo -e "${CYAN}[*] Copiando wallpapers...${NC}"
-cp "$SCRIPT_DIR/"*.jpg "$USER_HOME/wallpapers/" 2>/dev/null
-echo -e "${GREEN}[+] Wallpapers copiados a ~/wallpapers/${NC}"
+chmod +x "$USER_HOME/.config/polybar/scripts/"* 2>/dev/null
+chmod +x "$USER_HOME/.local/bin/"* 2>/dev/null
 
 echo -e "${CYAN}[*] Configurando ZSH...${NC}"
 # Instalar Oh My Zsh si no está instalado

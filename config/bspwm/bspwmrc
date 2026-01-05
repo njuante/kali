@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 #####################################################
 #            BSPWM Configuration                    #
@@ -6,16 +6,16 @@
 #####################################################
 
 # ─────────────────────────────────────────────────────
-# Monitor y Workspaces
+# Monitor y Workspaces (números simples)
 # ─────────────────────────────────────────────────────
-bspc monitor -d I II III IV V VI VII VIII IX X
+bspc monitor -d 1 2 3 4 5 6 7 8 9 10
 
 # ─────────────────────────────────────────────────────
 # Configuración Global de BSPWM
 # ─────────────────────────────────────────────────────
 bspc config border_width            2
-bspc config window_gap              12
-bspc config top_padding             45
+bspc config window_gap              10
+bspc config top_padding             40
 bspc config bottom_padding          5
 bspc config left_padding            5
 bspc config right_padding           5
@@ -31,7 +31,7 @@ bspc config remove_disabled_monitors    true
 bspc config remove_unplugged_monitors   true
 
 # ─────────────────────────────────────────────────────
-# Colores de Bordes (Tema Cyberpunk)
+# Colores de Bordes
 # ─────────────────────────────────────────────────────
 bspc config normal_border_color     "#1a1b26"
 bspc config active_border_color     "#bb9af7"
@@ -43,66 +43,47 @@ bspc config presel_feedback_color   "#9ece6a"
 # ─────────────────────────────────────────────────────
 bspc rule -a Firefox desktop='^2' follow=on
 bspc rule -a firefox-esr desktop='^2' follow=on
-bspc rule -a Burp\ Suite desktop='^3' follow=on state=tiled
-bspc rule -a burp-StartBurp desktop='^3' follow=on
 bspc rule -a Thunar desktop='^4' follow=on
 bspc rule -a File-roller state=floating
 bspc rule -a Lxappearance state=floating
 bspc rule -a Pavucontrol state=floating
-bspc rule -a Gpick state=floating
-bspc rule -a Nm-connection-editor state=floating
 bspc rule -a feh state=floating
 bspc rule -a mpv state=floating
-bspc rule -a Viewnior state=floating
-bspc rule -a Zathura state=tiled
 
 # ─────────────────────────────────────────────────────
 # Autostart
 # ─────────────────────────────────────────────────────
 
 # Matar procesos previos
-killall -q sxhkd polybar picom dunst
+killall -q sxhkd polybar picom dunst 2>/dev/null
 
-# Esperar a que terminen
-while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
+# Esperar
+sleep 0.5
 
-# Iniciar sxhkd
+# Cursor
+xsetroot -cursor_name left_ptr &
+
+# SXHKD - Hotkeys (MUY IMPORTANTE)
 sxhkd &
 
-# Iniciar compositor
-picom --config ~/.config/picom/picom.conf &
+# Compositor
+picom -b 2>/dev/null &
 
-# Iniciar polybar
-~/.config/polybar/launch.sh &
+# Polybar
+$HOME/.config/polybar/launch.sh &
 
-# Notificaciones
-dunst -config ~/.config/dunst/dunstrc &
+# Dunst
+dunst &
 
 # Wallpaper
-if [ -f ~/wallpapers/2151158655.jpg ]; then
-    feh --bg-fill ~/wallpapers/2151158655.jpg
-elif [ -f ~/wallpapers/2151160587.jpg ]; then
-    feh --bg-fill ~/wallpapers/2151160587.jpg
-elif [ -f ~/wallpapers/wallpaper.jpg ]; then
-    feh --bg-fill ~/wallpapers/wallpaper.jpg
-else
-    feh --bg-fill /usr/share/backgrounds/kali-16x9/kali-layers.png 2>/dev/null
+if [ -f "$HOME/wallpapers/2151158655.jpg" ]; then
+    feh --bg-fill "$HOME/wallpapers/2151158655.jpg"
+elif [ -f "$HOME/wallpapers/2151160587.jpg" ]; then
+    feh --bg-fill "$HOME/wallpapers/2151160587.jpg"
 fi
 
 # Policy Kit
 /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
 
-# Cursor
-xsetroot -cursor_name left_ptr &
-
-# Configurar resolución (1920x1080)
-xrandr --output $(xrandr | grep " connected" | cut -d" " -f1) --mode 1920x1080 --rate 60 2>/dev/null
-
-# Low battery notifier
-~/.local/bin/low_battery_notifier.sh &
-
-# ─────────────────────────────────────────────────────
-# Fix Java Applications
-# ─────────────────────────────────────────────────────
+# Fix Java
 export _JAVA_AWT_WM_NONREPARENTING=1
-wmname LG3D &

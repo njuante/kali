@@ -10,11 +10,10 @@ Un entorno de escritorio profesional y estético con BSPWM optimizado para pente
 
 La polybar incluye:
 - 🖥️ CPU, RAM, Almacenamiento
-- 🔒 Estado de VPN (conectado/desconectado)
-- 📶 WiFi con señal
+- � WiFi con señal
 - 🔊 Control de volumen
 - 🕐 Fecha y hora
-- 👻 Workspaces estilo Pacman
+- 🔢 Workspaces con números
 
 ## 🚀 Instalación
 
