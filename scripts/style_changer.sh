@@ -13,7 +13,7 @@ styles="🌌 Cyberpunk (Default)
 🎨 Gruvbox"
 
 # Select style
-selected=$(echo -e "$styles" | rofi -dmenu -i -theme ~/.config/rofi/themes/cyberpunk.rasi -p "Select Theme")
+selected=$(echo -e "$styles" | rofi -dmenu -i -p "Select Theme")
 
 case "$selected" in
     "🌌 Cyberpunk (Default)")

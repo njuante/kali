@@ -1,74 +1,87 @@
+/* Rofi config - Minimal Working Configuration */
+/* No external theme dependencies */
+
 configuration {
     modi: "drun,run,window";
     show-icons: true;
-    font: "Sans 11";
+    font: "monospace 11";
+    display-drun: "Apps";
+    display-run: "Run";
+    display-window: "Windows";
     drun-display-format: "{name}";
-    terminal: "kitty";
 }
 
 * {
-    bg:         #1a1b26;
-    bg-alt:     #24283b;
-    fg:         #c0caf5;
-    accent:     #7aa2f7;
-    urgent:     #f7768e;
-    
-    background-color: transparent;
-    text-color: @fg;
+    background:     #1a1b26;
+    background-alt: #24283b;
+    foreground:     #c0caf5;
+    selected:       #7aa2f7;
+    active:         #9ece6a;
+    urgent:         #f7768e;
 }
 
 window {
     width: 500px;
-    background-color: @bg;
-    border: 2px;
-    border-color: @accent;
-    border-radius: 12px;
-    padding: 20px;
+    transparency: "real";
+    background-color: @background;
+    border: 2px solid;
+    border-color: @selected;
+    border-radius: 10px;
+    padding: 15px;
 }
 
 mainbox {
-    spacing: 15px;
+    background-color: transparent;
     children: [inputbar, listview];
+    spacing: 10px;
 }
 
 inputbar {
-    background-color: @bg-alt;
+    background-color: @background-alt;
     border-radius: 8px;
-    padding: 12px;
-    spacing: 10px;
+    padding: 10px;
     children: [prompt, entry];
+    spacing: 10px;
 }
 
 prompt {
-    text-color: @accent;
+    background-color: transparent;
+    text-color: @selected;
 }
 
 entry {
-    placeholder: "Buscar...";
+    background-color: transparent;
+    text-color: @foreground;
+    placeholder: "Search...";
     placeholder-color: #565f89;
 }
 
 listview {
+    background-color: transparent;
+    columns: 1;
     lines: 8;
     spacing: 5px;
-    fixed-height: true;
 }
 
 element {
-    padding: 10px;
+    background-color: transparent;
+    text-color: @foreground;
+    padding: 8px;
     border-radius: 6px;
 }
 
 element selected {
-    background-color: @accent;
-    text-color: @bg;
-}
-
-element-text {
-    vertical-align: 0.5;
+    background-color: @selected;
+    text-color: @background;
 }
 
 element-icon {
-    size: 24px;
-    margin: 0 10px 0 0;
+    size: 22px;
+    background-color: transparent;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    vertical-align: 0.5;
 }

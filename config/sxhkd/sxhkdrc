@@ -20,11 +20,11 @@ super + shift + Return
 
 # Rofi aplicaciones
 super + d
-	rofi -show drun -theme ~/.config/rofi/themes/cyberpunk.rasi
+	rofi -show drun
 
 # Rofi ventanas
 super + Tab
-	rofi -show window -theme ~/.config/rofi/themes/cyberpunk.rasi
+	rofi -show window
 
 # ─────────────────────────────────────────────────────
 # APLICACIONES

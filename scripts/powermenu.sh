@@ -11,7 +11,7 @@ lock="󰌾 Bloquear"
 logout="󰍃 Cerrar sesión"
 
 # Mostrar menú
-selected=$(echo -e "$lock\n$logout\n$reboot\n$shutdown" | rofi -dmenu -i -p "Power" -theme ~/.config/rofi/themes/cyberpunk.rasi)
+selected=$(echo -e "$lock\n$logout\n$reboot\n$shutdown" | rofi -dmenu -i -p "Power")
 
 # Ejecutar acción
 case $selected in

@@ -13,7 +13,7 @@ apps="󰆍 Terminal (kitty)
 󰝚 Spotify"
 
 # Select app
-selected=$(echo -e "$apps" | rofi -dmenu -i -theme ~/.config/rofi/themes/cyberpunk.rasi -p "Open App")
+selected=$(echo -e "$apps" | rofi -dmenu -i -p "Open App")
 
 case "$selected" in
     "󰆍 Terminal (kitty)")
