@@ -1,19 +1,20 @@
-# 🌌 BSPWM Cyberpunk Environment for Kali Linux
+# 🔐 BSPWM Professional Pentesting Environment for Kali Linux
 
-![Cyberpunk Theme](https://img.shields.io/badge/Theme-Cyberpunk-purple?style=for-the-badge)
+![S4vitar Style](https://img.shields.io/badge/Style-S4vitar-d81b60?style=for-the-badge)
 ![Resolution](https://img.shields.io/badge/Resolution-1920x1080-blue?style=for-the-badge)
 ![Kali Linux](https://img.shields.io/badge/OS-Kali%20Linux-red?style=for-the-badge)
 
-Un entorno de escritorio profesional y estético con BSPWM optimizado para pentesting y uso diario.
+Un entorno de escritorio profesional con BSPWM optimizado para pentesting, basado en el estilo de s4vitar/eriic1002.
 
-## 📸 Screenshots
+## 📸 Preview
 
-La polybar incluye:
-- 🖥️ CPU, RAM, Almacenamiento
-- � WiFi con señal
-- 🔊 Control de volumen
-- 🕐 Fecha y hora
-- 🔢 Workspaces con números
+El entorno incluye:
+- 🎯 **Target IP Display** - Muestra la IP del objetivo actual
+- 🌐 **Ethernet Status** - IP de eth0 en tiempo real
+- 🔒 **VPN Status** - Estado de conexión tun0
+- 💻 **CPU, RAM, Disk** - Monitores del sistema
+- 🔢 **Workspaces I-X** - Estilo romano
+- ⚡ **Powermenu** - Menú de apagado con rofi
 
 ## 🚀 Instalación
 
@@ -72,9 +73,9 @@ Al reiniciar, selecciona **BSPWM** en el gestor de inicio de sesión.
 | Atajo | Acción |
 |-------|--------|
 | `Super + Alt + (←↓↑→)` | Expandir ventana |
-| `Super + Shift + R` | Modo resize (W/N/T/S/R) |
+| `Super + Ctrl + Alt + (←↓↑→)` | Redimensionar con script |
 
-### Subventanas
+### Subventanas (Kitty)
 | Atajo | Acción |
 |-------|--------|
 | `Ctrl + Shift + Enter` | Abrir subventana |
@@ -87,7 +88,6 @@ Al reiniciar, selecciona **BSPWM** en el gestor de inicio de sesión.
 | Atajo | Acción |
 |-------|--------|
 | `Super + Ctrl + (←↓↑→)` | Preseleccionar dirección |
-| `Super + Ctrl + Alt + (←↓↑→)` | Menú preselección |
 | `Super + Ctrl + Space` | Cancelar preselección |
 
 ### Sistema
@@ -96,7 +96,7 @@ Al reiniciar, selecciona **BSPWM** en el gestor de inicio de sesión.
 | `Super + Alt + R` | Reiniciar bspwm |
 | `Super + Alt + Q` | Cerrar sesión |
 | `Ctrl + Alt + L` | Bloquear pantalla |
-| `Super + X` | Menú de apagado |
+| `Super + X` | Menú de apagado (Powermenu) |
 
 ### Audio/Media
 | Atajo | Acción |
@@ -105,74 +105,122 @@ Al reiniciar, selecciona **BSPWM** en el gestor de inicio de sesión.
 | `Ctrl + Shift + M` | Mute/unmute |
 | `XF86Audio*` | Teclas multimedia |
 
-### Extras
+### Screenshots
 | Atajo | Acción |
 |-------|--------|
-| `Super + Shift + S` | Cambiar tema/estilo |
-| `Super + (-)` | Terminal scratchpad |
 | `Print` | Screenshot completo |
 | `Super + Print` | Screenshot selección |
 
-## 🎨 Temas Incluidos
+## 🎯 Funciones de Pentesting (ZSH)
 
-Usa `Super + Shift + S` para cambiar entre:
-- 🌌 **Cyberpunk** (Default)
-- 🌙 **Tokyo Night**
-- 🔥 **Dracula**
-- 🌿 **Nord**
-- 🌊 **Catppuccin**
-- 🎨 **Gruvbox**
+### Target Management
+```bash
+# Establecer IP objetivo (se muestra en polybar)
+set_target 10.10.10.100
+
+# Limpiar target
+clear_target
+```
+
+### Funciones Útiles
+| Comando | Descripción |
+|---------|-------------|
+| `mkt` | Crear estructura de directorios (nmap, content, exploits, scripts) |
+| `extract_ports <file>` | Extrae puertos de archivo grepeable de nmap |
+| `set_target <IP>` | Establece IP objetivo (muestra en polybar) |
+| `clear_target` | Limpia IP objetivo |
+
+### Aliases Principales
+| Alias | Descripción |
+|-------|-------------|
+| `ll` | `lsd -lh --group-dirs=first` |
+| `la` | `lsd -a --group-dirs=first` |
+| `l` | `lsd --group-dirs=first` |
+| `lla` | `lsd -lha --group-dirs=first` |
+| `ls` | `lsd --group-dirs=first` |
+| `cat` | `bat` |
+| `catn` | `/bin/cat` |
+| `catnl` | `bat --style=plain` |
 
 ## 📁 Estructura de Archivos
 
 ```
 ~/.config/
 ├── bspwm/
-│   └── bspwmrc          # Configuración de bspwm
+│   ├── bspwmrc              # Configuración de bspwm
+│   └── scripts/
+│       ├── ethernet_status.sh   # Script IP ethernet
+│       ├── vpn_status.sh        # Script estado VPN
+│       ├── target_ip_status.sh  # Script IP objetivo
+│       ├── target_ip            # Archivo con IP objetivo
+│       └── bspwm_resize         # Script de redimensionado
 ├── sxhkd/
-│   └── sxhkdrc          # Atajos de teclado
+│   └── sxhkdrc              # Atajos de teclado
 ├── polybar/
-│   ├── config.ini       # Configuración de polybar
-│   ├── launch.sh        # Script de lanzamiento
-│   └── scripts/         # Scripts de módulos
+│   ├── colors.ini           # Paleta de colores
+│   ├── current.ini          # Barras principales
+│   ├── workspace.ini        # Barra de workspaces
+│   ├── launch.sh            # Script de lanzamiento
+│   └── scripts/
+│       ├── powermenu        # Script powermenu
+│       ├── style-3.rasi     # Estilo powermenu
+│       └── shared/
+│           └── confirm.rasi # Diálogo confirmación
 ├── kitty/
-│   └── kitty.conf       # Configuración terminal
+│   ├── kitty.conf           # Configuración terminal
+│   └── color.ini            # Colores de terminal
 ├── rofi/
-│   ├── config.rasi      # Configuración rofi
-│   └── themes/          # Temas de rofi
+│   ├── config.rasi          # Configuración rofi
+│   └── themes/
+│       ├── rounded-common.rasi  # Tema base
+│       └── rounded-custom.rasi  # Colores personalizados
 ├── picom/
-│   └── picom.conf       # Compositor (transparencias)
-├── dunst/
-│   └── dunstrc          # Notificaciones
-└── neofetch/
-    └── config.conf      # Neofetch config
-
-~/.local/bin/
-├── powermenu.sh         # Menú de apagado
-├── style_changer.sh     # Cambiar temas
-├── scratchpad.sh        # Terminal scratchpad
-└── ...                  # Otros scripts
+│   └── picom.conf           # Compositor (transparencias)
+└── zshrc                    # Configuración ZSH
 
 ~/wallpapers/
-└── cyberpunk.jpg        # Wallpaper
+└── *.jpg                    # Wallpapers
 ```
+
+## 🎨 Colores del Tema
+
+| Color | Hex | Uso |
+|-------|-----|-----|
+| Background | `#99000000` | Fondo de barras (transparente) |
+| Pink | `#d81b60` | Acentos y bordes activos |
+| White | `#FFFFFF` | Texto principal |
+| Grey | `#919191` | Texto secundario |
+| Red | `#FF0000` | Alertas/Errores |
+| Green | `#29d607` | VPN conectado |
 
 ## 🔧 Personalización
 
 ### Cambiar wallpaper
 ```bash
+# Editar bspwmrc y cambiar la línea de feh
+nano ~/.config/bspwm/bspwmrc
+
+# O usar feh directamente
 feh --bg-fill /ruta/al/wallpaper.jpg
 ```
 
 ### Editar polybar
 ```bash
-nano ~/.config/polybar/config.ini
+# Colores
+nano ~/.config/polybar/colors.ini
+
+# Barras
+nano ~/.config/polybar/current.ini
+nano ~/.config/polybar/workspace.ini
+
+# Reiniciar polybar
 ~/.config/polybar/launch.sh
 ```
 
 ### Editar kitty
 ```bash
 nano ~/.config/kitty/kitty.conf
+nano ~/.config/kitty/color.ini
 ```
 
 ### Editar atajos
@@ -182,65 +230,24 @@ nano ~/.config/sxhkd/sxhkdrc
 
 ## 💡 Tips
 
-1. **VPN Indicator**: La polybar muestra el estado de la VPN (tun0/tap0)
-2. **Screenshots**: Se guardan en `~/Pictures/Screenshots/`
-3. **Scratchpad**: Terminal flotante con `Super + -`
-
-## 🔍 Comandos de Reconocimiento (ZSH)
-
-### Funciones Principales
-| Comando | Descripción |
-|---------|-------------|
-| `ctf <nombre>` | Crea estructura de directorios para CTF |
-| `recon <IP>` | Escaneo completo de nmap (puertos + servicios) |
-| `quickscan <IP>` | Escaneo rápido nmap |
-| `udpscan <IP>` | Escaneo UDP top 50 puertos |
-| `webrecon <URL>` | Reconocimiento web (whatweb + gobuster) |
-| `revshell [IP] [PORT]` | Genera reverse shells (bash, python, nc, php, powershell) |
-| `ttyupgrade` | Muestra comandos para upgrader TTY |
-| `listen [PORT]` | Inicia listener netcat (default 4444) |
-| `cpip` | Copia IP de tun0 al portapapeles |
-| `enum-smb <IP>` | Ejecuta enum4linux completo |
-| `peas-server [PORT]` | Sirve LinPEAS/WinPEAS |
-
-### Aliases de Nmap
-| Alias | Comando |
-|-------|---------|
-| `nmap-quick` | `nmap -sC -sV -O -T4` |
-| `nmap-full` | `nmap -sC -sV -O -p- -T4` |
-| `nmap-udp` | `sudo nmap -sU --top-ports 100 -T4` |
-| `nmap-vuln` | `nmap --script vuln -T4` |
-| `nmap-stealth` | `sudo nmap -sS -T2` |
-
-### Aliases de Web
-| Alias | Descripción |
-|-------|-------------|
-| `gobuster-dir` | Dirbusting con wordlist medium |
-| `gobuster-vhost` | Enumeración de virtual hosts |
-| `ffuf-dir` | Fuzzing de directorios |
-| `nikto-scan` | Escaneo Nikto |
-| `wpscan-enum` | Enumeración WordPress |
-
-### Aliases de SMB/LDAP
-| Alias | Descripción |
-|-------|-------------|
-| `smb-enum` | enum4linux -a |
-| `smb-shares` | smbclient -L |
-| `smb-map` | smbmap -H |
-| `ldap-search` | ldapsearch básico |
-
-### Servidores Rápidos
-| Alias | Descripción |
-|-------|-------------|
-| `serv` | Python HTTP server puerto 80 |
-| `serv8000` | Python HTTP server puerto 8000 |
-| `smb-server` | SMB server con impacket |
+1. **Target IP**: Usa `set_target <IP>` para que aparezca en la polybar
+2. **VPN Indicator**: Muestra el estado de tun0 en tiempo real
+3. **Screenshots**: Se guardan en `~/Pictures/`
+4. **Powermenu**: `Super + X` abre el menú de apagado
 
 ## 🐛 Solución de Problemas
 
 ### Polybar no aparece
 ```bash
+# Reiniciar polybar manualmente
 ~/.config/polybar/launch.sh
+```
+
+### Barras desaparecen al cambiar workspace
+```bash
+# Verificar que picom tenga esta configuración
+grep "mark-ovredir-focused" ~/.config/picom/picom.conf
+# Debe ser: mark-ovredir-focused = false
 ```
 
 ### Fuentes no se muestran bien
@@ -248,14 +255,18 @@ nano ~/.config/sxhkd/sxhkdrc
 fc-cache -fv
 ```
 
-### Picom causa lag
-Edita `~/.config/picom/picom.conf` y cambia `backend = "glx"` a `backend = "xrender"`
+### Picom causa lag (en VM)
+Edita `~/.config/picom/picom.conf` y asegúrate de tener:
+```
+backend = "xrender"
+vsync = false
+```
 
-## 📝 Licencia
+## 📝 Créditos
 
-Este proyecto es de uso libre. ¡Disfruta tu nuevo entorno!
+- Estilo basado en: [eriic1002/kali-environment-autoinstaller](https://github.com/eriic1002/kali-environment-autoinstaller)
+- Inspirado en el entorno de: [s4vitar](https://github.com/s4vitar)
 
 ---
 
-**Autor**: Configuración automática generada para Kali Linux
 **Resolución optimizada**: 1920x1080

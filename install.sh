@@ -1,8 +1,9 @@
 #!/bin/bash
 
 #####################################################
-#   BSPWM Cyberpunk Environment - Auto Installer    #
-#   Para Kali Linux - Resolución 1920x1080          #
+#   BSPWM Environment - Auto Installer              #
+#   eriic1002 Style - s4vitar based                 #
+#   Para Kali Linux                                 #
 #####################################################
 
 # Colores para output
@@ -23,8 +24,8 @@ cat << "EOF"
  | |_) |___) |  __/ \ V  V / | |  | |
  |____/|____/|_|     \_/\_/  |_|  |_|
                                       
-   Cyberpunk Environment Installer
-   For Kali Linux - 1920x1080
+   eriic1002 Style Environment
+   Based on s4vitar config
 EOF
 echo -e "${NC}"
 
@@ -149,7 +150,7 @@ fi
 fc-cache -fv
 
 echo -e "${CYAN}[*] Creando estructura de directorios...${NC}"
-mkdir -p "$USER_HOME/.config/bspwm"
+mkdir -p "$USER_HOME/.config/bspwm/scripts"
 mkdir -p "$USER_HOME/.config/sxhkd"
 mkdir -p "$USER_HOME/.config/polybar/scripts"
 mkdir -p "$USER_HOME/.config/rofi/themes"
@@ -193,28 +194,31 @@ if [ ! -d "$USER_HOME/.oh-my-zsh" ]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 fi
 
-# Instalar Powerlevel10k
-ZSH_CUSTOM="${ZSH_CUSTOM:-$USER_HOME/.oh-my-zsh/custom}"
-if [ ! -d "$ZSH_CUSTOM/themes/powerlevel10k" ]; then
+# Instalar Powerlevel10k como indica eriic1002
+P10K_DIR="$USER_HOME/.config/powerlevel10k"
+if [ ! -d "$P10K_DIR" ]; then
     echo -e "${YELLOW}[+] Instalando Powerlevel10k...${NC}"
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$ZSH_CUSTOM/themes/powerlevel10k"
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$P10K_DIR"
 fi
 
-# Instalar plugins de zsh
-if [ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]; then
-    echo -e "${YELLOW}[+] Instalando zsh-autosuggestions...${NC}"
-    git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
-fi
+# Instalar plugins de zsh (desde paquetes del sistema)
+echo -e "${YELLOW}[+] Instalando plugins zsh desde apt...${NC}"
+sudo apt install -y zsh-autosuggestions zsh-syntax-highlighting
 
-if [ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]; then
-    echo -e "${YELLOW}[+] Instalando zsh-syntax-highlighting...${NC}"
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
-fi
+# Instalar el plugin sudo
+sudo mkdir -p /usr/share/zsh-sudo
+sudo wget -q -P /usr/share/zsh-sudo https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/sudo/sudo.plugin.zsh 2>/dev/null || true
 
 # Copiar configuración de zsh
 echo -e "${YELLOW}[+] Configurando .zshrc...${NC}"
 cp "$SCRIPT_DIR/config/zshrc" "$USER_HOME/.zshrc"
 cp "$SCRIPT_DIR/config/p10k.zsh" "$USER_HOME/.p10k.zsh"
+
+# Crear archivo target_ip vacío
+touch "$USER_HOME/.config/bspwm/scripts/target_ip"
+
+# Hacer ejecutables los scripts de bspwm
+chmod +x "$USER_HOME/.config/bspwm/scripts/"*
 
 echo -e "${CYAN}[*] Configurando shell por defecto...${NC}"
 chsh -s $(which zsh)
@@ -233,7 +237,12 @@ cat << "EOF"
 ║   • Super + D         → Rofi launcher                     ║
 ║   • Super + W         → Cerrar ventana                    ║
 ║   • Super + Alt + R   → Reiniciar bspwm                   ║
-║   • Super + Shift + S → Cambiar estilo                    ║
+║                                                           ║
+║   Funciones de ZSH:                                       ║
+║   • set_target <IP>   → Establecer target en polybar      ║
+║   • clear_target      → Limpiar target                    ║
+║   • mkt               → Crear dirs nmap,content,scripts   ║
+║   • extract_ports <f> → Extraer puertos de nmap output    ║
 ║                                                           ║
 ╚═══════════════════════════════════════════════════════════╝
 EOF

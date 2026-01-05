@@ -1,14 +1,24 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
-# Matar instancias previas
+## Add this to your wm startup file.
+
+# Terminate already running bar instances
 killall -q polybar
 
-# Esperar
+## Wait until the processes have been shut down
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
-# Lanzar las 3 barras del tema Lain
-polybar lain-bar -c $HOME/.config/polybar/config.ini &
-polybar lain-bar2 -c $HOME/.config/polybar/config.ini &
-polybar lain-bar3 -c $HOME/.config/polybar/config.ini &
+## Launch
 
-echo "Polybar Lain theme launched"
+## Left bar
+polybar log -c ~/.config/polybar/current.ini &
+polybar ethernet_bar -c ~/.config/polybar/current.ini &
+polybar vpn_bar -c ~/.config/polybar/current.ini &
+
+## Right bar
+polybar primary -c ~/.config/polybar/current.ini &
+polybar secondary -c ~/.config/polybar/current.ini &
+polybar target_ip_bar -c ~/.config/polybar/current.ini &
+
+## Center bar
+polybar primary -c ~/.config/polybar/workspace.ini &

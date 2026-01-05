@@ -1,0 +1,74 @@
+/*******************************************************************************
+ * CONFIRM DIALOG - eriic1002
+ *******************************************************************************/
+
+* {
+    bg:     #00000099;
+    bg-alt: #3D3D3D80;
+    accent: #d81b60;
+    fg:     #FFFFFF;
+    fg-alt: #969696;
+    
+    background-color:   transparent;
+    text-color:         @fg;
+    margin:             0px;
+    padding:            0px;
+    spacing:            0px;
+}
+
+window {
+    location:           center;
+    width:              280px;
+    border-radius:      10px;
+    background-color:   @bg;
+}
+
+mainbox {
+    padding:            20px;
+}
+
+message {
+    margin:             0 0 15px 0;
+    border-radius:      8px;
+    background-color:   @bg-alt;
+}
+
+textbox {
+    padding:            8px;
+    text-color:         @fg-alt;
+    horizontal-align:   0.5;
+}
+
+inputbar {
+    children:           [ prompt ];
+    padding:            12px;
+    border-radius:      8px;
+    background-color:   @bg-alt;
+    margin:             0 0 15px 0;
+}
+
+prompt {
+    text-color:         @fg;
+    horizontal-align:   0.5;
+}
+
+listview {
+    columns:            2;
+    lines:              1;
+    spacing:            10px;
+}
+
+element {
+    padding:            15px 0;
+    border-radius:      8px;
+}
+
+element selected {
+    background-color:   @accent;
+}
+
+element-text {
+    font:               "Hack Nerd Font 16";
+    horizontal-align:   0.5;
+    vertical-align:     0.5;
+}
