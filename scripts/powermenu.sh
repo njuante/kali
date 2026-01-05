@@ -1,20 +1,20 @@
 #!/bin/bash
 
 #####################################################
-#              Power Menu (Rofi)                    #
+#              Power Menu - Rofi                    #
 #####################################################
 
-# Options
-shutdown=" Shutdown"
-reboot=" Reboot"
-lock=" Lock"
-suspend="󰤄 Suspend"
-logout="󰍃 Logout"
+# Opciones
+shutdown="󰐥 Apagar"
+reboot="󰜉 Reiniciar"
+lock="󰌾 Bloquear"
+logout="󰍃 Cerrar sesión"
 
-# Get answer
-answer=$(echo -e "$lock\n$suspend\n$logout\n$reboot\n$shutdown" | rofi -dmenu -i -theme ~/.config/rofi/themes/cyberpunk.rasi -p "Power Menu")
+# Mostrar menú
+selected=$(echo -e "$lock\n$logout\n$reboot\n$shutdown" | rofi -dmenu -i -p "Power" -theme ~/.config/rofi/themes/cyberpunk.rasi)
 
-case $answer in
+# Ejecutar acción
+case $selected in
     $shutdown)
         systemctl poweroff
         ;;
@@ -22,10 +22,7 @@ case $answer in
         systemctl reboot
         ;;
     $lock)
-        betterlockscreen -l 2>/dev/null || i3lock -c 1a1b26
-        ;;
-    $suspend)
-        systemctl suspend
+        i3lock -c 1a1b26
         ;;
     $logout)
         bspc quit

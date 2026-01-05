@@ -83,12 +83,26 @@ sudo apt install -y \
 
 # Verificar que kitty está instalado
 if ! command -v kitty &> /dev/null; then
-    echo -e "${YELLOW}[+] Instalando kitty desde binarios...${NC}"
-    curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-    mkdir -p ~/.local/bin
-    ln -sf ~/.local/kitty.app/bin/kitty ~/.local/bin/
-    ln -sf ~/.local/kitty.app/bin/kitten ~/.local/bin/
+    echo -e "${YELLOW}[+] Kitty no encontrado, instalando...${NC}"
+    # Intentar instalar desde repos primero
+    sudo apt install -y kitty 2>/dev/null
+    
+    # Si aún no está, instalar desde binarios
+    if ! command -v kitty &> /dev/null; then
+        echo -e "${YELLOW}[+] Instalando kitty desde binarios...${NC}"
+        curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin launch=n
+        mkdir -p ~/.local/bin
+        ln -sf ~/.local/kitty.app/bin/kitty ~/.local/bin/
+        ln -sf ~/.local/kitty.app/bin/kitten ~/.local/bin/
+        
+        # Crear desktop entry
+        mkdir -p ~/.local/share/applications
+        cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications/
+        sed -i "s|Icon=kitty|Icon=$HOME/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty.desktop
+    fi
 fi
+
+echo -e "${GREEN}[+] Kitty: $(which kitty 2>/dev/null || echo 'instalado en ~/.local/bin')${NC}"
 
 # Instalar Burpsuite si no está instalado
 if ! command -v burpsuite &> /dev/null; then

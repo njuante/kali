@@ -1,33 +1,33 @@
 #####################################################
-#            SXHKD Configuration                    #
+#            SXHKD - Atajos de Teclado              #
 #####################################################
 
 # ─────────────────────────────────────────────────────
-# Terminal
+# TERMINAL
 # ─────────────────────────────────────────────────────
 
-# Terminal emulator
+# Kitty terminal
 super + Return
-	kitty
+	kitty || xterm
 
-# Terminal alternativo
+# Xterm (alternativo)
 super + shift + Return
 	xterm
 
 # ─────────────────────────────────────────────────────
-# Launcher
+# LAUNCHER - ROFI
 # ─────────────────────────────────────────────────────
 
-# Rofi
+# Rofi aplicaciones
 super + d
-	rofi -show drun
+	rofi -show drun -theme ~/.config/rofi/themes/cyberpunk.rasi
 
-# Rofi window
+# Rofi ventanas
 super + Tab
-	rofi -show window
+	rofi -show window -theme ~/.config/rofi/themes/cyberpunk.rasi
 
 # ─────────────────────────────────────────────────────
-# Aplicaciones
+# APLICACIONES
 # ─────────────────────────────────────────────────────
 
 # Firefox
@@ -38,12 +38,12 @@ super + shift + f
 super + shift + b
 	burpsuite
 
-# File manager
+# Thunar
 super + e
 	thunar
 
 # ─────────────────────────────────────────────────────
-# BSPWM - Básico
+# BSPWM BASICO
 # ─────────────────────────────────────────────────────
 
 # Reiniciar bspwm
@@ -63,7 +63,7 @@ super + shift + w
 	bspc node -k
 
 # ─────────────────────────────────────────────────────
-# Estados de ventana
+# ESTADOS DE VENTANA
 # ─────────────────────────────────────────────────────
 
 # Tiled
@@ -78,12 +78,12 @@ super + s
 super + f
 	bspc node -t fullscreen
 
-# Monocle toggle
+# Monocle
 super + m
 	bspc desktop -l next
 
 # ─────────────────────────────────────────────────────
-# Focus / Mover ventanas
+# FOCUS Y MOVER
 # ─────────────────────────────────────────────────────
 
 # Focus en dirección
@@ -93,7 +93,7 @@ super + {h,j,k,l}
 super + {Left,Down,Up,Right}
 	bspc node -f {west,south,north,east}
 
-# Mover ventana en dirección
+# Mover ventana
 super + shift + {h,j,k,l}
 	bspc node -s {west,south,north,east}
 
@@ -101,56 +101,41 @@ super + shift + {Left,Down,Up,Right}
 	bspc node -s {west,south,north,east}
 
 # ─────────────────────────────────────────────────────
-# Workspaces
+# WORKSPACES
 # ─────────────────────────────────────────────────────
 
 # Ir a workspace
 super + {1-9,0}
 	bspc desktop -f '^{1-9,10}'
 
-# Mover ventana a workspace
+# Mover a workspace
 super + shift + {1-9,0}
 	bspc node -d '^{1-9,10}'
 
-# Siguiente/anterior workspace
-super + bracket{left,right}
-	bspc desktop -f {prev,next}.local
-
 # ─────────────────────────────────────────────────────
-# Redimensionar
+# REDIMENSIONAR
 # ─────────────────────────────────────────────────────
 
-# Expandir
 super + alt + {h,j,k,l}
 	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
 
 super + alt + {Left,Down,Up,Right}
 	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
 
-# Contraer
-super + alt + shift + {h,j,k,l}
-	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
-
 # ─────────────────────────────────────────────────────
-# Preseleccionar
+# PRESELECCIONAR
 # ─────────────────────────────────────────────────────
 
-# Preseleccionar dirección
 super + ctrl + {h,j,k,l}
 	bspc node -p {west,south,north,east}
 
-super + ctrl + {Left,Down,Up,Right}
-	bspc node -p {west,south,north,east}
-
-# Cancelar preselección
 super + ctrl + space
 	bspc node -p cancel
 
 # ─────────────────────────────────────────────────────
-# Audio
+# AUDIO
 # ─────────────────────────────────────────────────────
 
-# Volumen
 XF86AudioRaiseVolume
 	pactl set-sink-volume @DEFAULT_SINK@ +5%
 
@@ -161,7 +146,7 @@ XF86AudioMute
 	pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 # ─────────────────────────────────────────────────────
-# Screenshot
+# SCREENSHOT
 # ─────────────────────────────────────────────────────
 
 Print
@@ -171,15 +156,11 @@ super + Print
 	scrot -s ~/Pictures/screenshot_%Y%m%d_%H%M%S.png
 
 # ─────────────────────────────────────────────────────
-# Bloquear pantalla
-# ─────────────────────────────────────────────────────
-
-ctrl + alt + l
-	i3lock -c 1a1b26
-
-# ─────────────────────────────────────────────────────
-# Power menu
+# POWER MENU
 # ─────────────────────────────────────────────────────
 
 super + x
-	$HOME/.local/bin/powermenu.sh
+	~/.local/bin/powermenu.sh
+
+ctrl + alt + l
+	i3lock -c 1a1b26
