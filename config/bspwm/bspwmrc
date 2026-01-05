@@ -66,8 +66,8 @@ xsetroot -cursor_name left_ptr &
 # SXHKD - Hotkeys (MUY IMPORTANTE)
 sxhkd &
 
-# Compositor
-picom -b 2>/dev/null &
+# Compositor con config (bordes redondeados)
+picom --config $HOME/.config/picom/picom.conf -b &
 
 # Polybar
 $HOME/.config/polybar/launch.sh &

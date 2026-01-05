@@ -67,8 +67,7 @@ sudo apt install -y \
     xclip \
     scrot \
     imagemagick \
-    playerctl \
-    pamixer \
+    pulseaudio-utils \
     brightnessctl \
     network-manager \
     wireless-tools \
@@ -76,10 +75,20 @@ sudo apt install -y \
     jq \
     xdotool \
     wmctrl \
-    xdo \
     firefox-esr \
     thunar \
-    lxpolkit
+    lxpolkit \
+    i3lock \
+    xterm
+
+# Verificar que kitty está instalado
+if ! command -v kitty &> /dev/null; then
+    echo -e "${YELLOW}[+] Instalando kitty desde binarios...${NC}"
+    curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+    mkdir -p ~/.local/bin
+    ln -sf ~/.local/kitty.app/bin/kitty ~/.local/bin/
+    ln -sf ~/.local/kitty.app/bin/kitten ~/.local/bin/
+fi
 
 # Instalar Burpsuite si no está instalado
 if ! command -v burpsuite &> /dev/null; then
@@ -161,28 +170,36 @@ chmod +x "$USER_HOME/.config/polybar/launch.sh"
 chmod +x "$USER_HOME/.config/polybar/scripts/"* 2>/dev/null
 chmod +x "$USER_HOME/.local/bin/"* 2>/dev/null
 
-echo -e "${CYAN}[*] Configurando ZSH...${NC}"
+echo -e "${CYAN}[*] Configurando ZSH y Powerlevel10k...${NC}"
+
 # Instalar Oh My Zsh si no está instalado
 if [ ! -d "$USER_HOME/.oh-my-zsh" ]; then
+    echo -e "${YELLOW}[+] Instalando Oh My Zsh...${NC}"
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 fi
 
 # Instalar Powerlevel10k
-if [ ! -d "${ZSH_CUSTOM:-$USER_HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]; then
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
-        "${ZSH_CUSTOM:-$USER_HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+ZSH_CUSTOM="${ZSH_CUSTOM:-$USER_HOME/.oh-my-zsh/custom}"
+if [ ! -d "$ZSH_CUSTOM/themes/powerlevel10k" ]; then
+    echo -e "${YELLOW}[+] Instalando Powerlevel10k...${NC}"
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$ZSH_CUSTOM/themes/powerlevel10k"
 fi
 
 # Instalar plugins de zsh
-ZSH_CUSTOM="${ZSH_CUSTOM:-$USER_HOME/.oh-my-zsh/custom}"
-
 if [ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]; then
+    echo -e "${YELLOW}[+] Instalando zsh-autosuggestions...${NC}"
     git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
 fi
 
 if [ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]; then
+    echo -e "${YELLOW}[+] Instalando zsh-syntax-highlighting...${NC}"
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
 fi
+
+# Copiar configuración de zsh
+echo -e "${YELLOW}[+] Configurando .zshrc...${NC}"
+cp "$SCRIPT_DIR/config/zshrc" "$USER_HOME/.zshrc"
+cp "$SCRIPT_DIR/config/p10k.zsh" "$USER_HOME/.p10k.zsh"
 
 echo -e "${CYAN}[*] Configurando shell por defecto...${NC}"
 chsh -s $(which zsh)
