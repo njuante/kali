@@ -1,0 +1,309 @@
+#####################################################
+#            SXHKD Configuration                    #
+#            Keybindings - Cyberpunk BSPWM          #
+#####################################################
+
+# ─────────────────────────────────────────────────────
+# WM Independent Hotkeys
+# ─────────────────────────────────────────────────────
+
+# Terminal (kitty)
+super + Return
+    kitty
+
+# Rofi launcher
+super + d
+    rofi -show drun -theme ~/.config/rofi/themes/cyberpunk.rasi
+
+# Rofi window switcher
+super + Tab
+    rofi -show window -theme ~/.config/rofi/themes/cyberpunk.rasi
+
+# Rofi file browser
+super + shift + f
+    rofi -show filebrowser -theme ~/.config/rofi/themes/cyberpunk.rasi
+
+# Firefox
+super + shift + Return
+    firefox-esr
+
+# Burpsuite
+super + shift + b
+    burpsuite
+
+# File manager (Thunar)
+super + e
+    thunar
+
+# Screenshot (full screen)
+Print
+    scrot ~/Pictures/Screenshots/screenshot_%Y%m%d_%H%M%S.png && notify-send "Screenshot" "Saved to ~/Pictures/Screenshots"
+
+# Screenshot (selection)
+super + Print
+    scrot -s ~/Pictures/Screenshots/screenshot_%Y%m%d_%H%M%S.png && notify-send "Screenshot" "Selection saved"
+
+# Screenshot (active window)
+super + shift + Print
+    scrot -u ~/Pictures/Screenshots/screenshot_%Y%m%d_%H%M%S.png && notify-send "Screenshot" "Window saved"
+
+# Lock screen
+ctrl + alt + l
+    betterlockscreen -l || i3lock -c 1a1b26
+
+# ─────────────────────────────────────────────────────
+# BSPWM Hotkeys
+# ─────────────────────────────────────────────────────
+
+# Restart bspwm
+super + alt + r
+    bspc wm -r
+
+# Logout
+super + alt + q
+    bspc quit
+
+# Close window
+super + w
+    bspc node -c
+
+# Kill window (force)
+super + shift + w
+    bspc node -k
+
+# Alternate between tiled and monocle layout
+super + m
+    bspc desktop -l next
+
+# Send the newest marked node to the newest preselected node
+super + y
+    bspc node newest.marked.local -n newest.!automatic.local
+
+# Swap current node and biggest window
+super + g
+    bspc node -s biggest.window
+
+# ─────────────────────────────────────────────────────
+# State/Flags
+# ─────────────────────────────────────────────────────
+
+# Set window state (tiled, pseudo_tiled, floating, fullscreen)
+super + t
+    bspc node -t tiled
+
+super + shift + t
+    bspc node -t pseudo_tiled
+
+super + s
+    bspc node -t floating
+
+super + f
+    bspc node -t fullscreen
+
+# Set node flags
+super + ctrl + m
+    bspc node -g marked
+
+super + ctrl + x
+    bspc node -g locked
+
+super + ctrl + y
+    bspc node -g sticky
+
+super + ctrl + z
+    bspc node -g private
+
+# ─────────────────────────────────────────────────────
+# Focus/Swap
+# ─────────────────────────────────────────────────────
+
+# Focus window in direction
+super + {h,j,k,l}
+    bspc node -f {west,south,north,east}
+
+super + {Left,Down,Up,Right}
+    bspc node -f {west,south,north,east}
+
+# Swap window in direction
+super + shift + {h,j,k,l}
+    bspc node -s {west,south,north,east}
+
+super + shift + {Left,Down,Up,Right}
+    bspc node -s {west,south,north,east}
+
+# Focus parent/child node
+super + {p,b,comma,period}
+    bspc node -f @{parent,brother,first,second}
+
+# Focus next/previous window in current desktop
+super + {_,shift + }c
+    bspc node -f {next,prev}.local.!hidden.window
+
+# Focus next/previous desktop in current monitor
+super + bracket{left,right}
+    bspc desktop -f {prev,next}.local
+
+# Focus/send to desktop
+super + {_,shift + }{1-9,0}
+    bspc {desktop -f,node -d} '^{1-9,10}'
+
+# Focus last node/desktop
+super + {grave,Tab}
+    bspc {node,desktop} -f last
+
+# Focus older/newer node in focus history
+super + {o,i}
+    bspc wm -h off; \
+    bspc node {older,newer} -f; \
+    bspc wm -h on
+
+# ─────────────────────────────────────────────────────
+# Preselect
+# ─────────────────────────────────────────────────────
+
+# Preselect direction for next window
+super + ctrl + {h,j,k,l}
+    bspc node -p {west,south,north,east}
+
+super + ctrl + {Left,Down,Up,Right}
+    bspc node -p {west,south,north,east}
+
+# Preselect ratio
+super + ctrl + {1-9}
+    bspc node -o 0.{1-9}
+
+# Cancel preselection for focused node
+super + ctrl + space
+    bspc node -p cancel
+
+# Cancel preselection for focused desktop
+super + ctrl + alt + space
+    bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+# ─────────────────────────────────────────────────────
+# Move/Resize
+# ─────────────────────────────────────────────────────
+
+# Expand window by moving side outward
+super + alt + {h,j,k,l}
+    bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+super + alt + {Left,Down,Up,Right}
+    bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# Contract window by moving side inward
+super + alt + shift + {h,j,k,l}
+    bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+super + alt + shift + {Left,Down,Up,Right}
+    bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# Move floating window
+super + ctrl + {h,j,k,l}
+    bspc node -v {-20 0,0 20,0 -20,20 0}
+
+# Enter resize mode (like in your image)
+super + shift + r
+    ~/.local/bin/resize_mode.sh
+
+# ─────────────────────────────────────────────────────
+# Sub-window Management
+# ─────────────────────────────────────────────────────
+
+# Open sub-window in current window (split)
+ctrl + shift + Return
+    bspc node -p south && kitty
+
+# Zoom in on current sub-window
+ctrl + shift + z
+    bspc node -t fullscreen || bspc node -t tiled
+
+# Navigate between sub-windows
+ctrl + {Left,Down,Up,Right}
+    bspc node -f {west,south,north,east}
+
+# Toggle sub-window arrangement
+ctrl + shift + l
+    bspc node @parent -R 90
+
+# Close current sub-window
+ctrl + shift + w
+    bspc node -c
+
+# ─────────────────────────────────────────────────────
+# Special Preselection Menu
+# ─────────────────────────────────────────────────────
+
+# Show preselection menu (kitty, Firefox, File manager, etc.)
+super + ctrl + alt + {Left,Down,Up,Right}
+    ~/.local/bin/preselect_menu.sh
+
+# Undo preselection
+super + ctrl + alt + space
+    bspc node -p cancel
+
+# ─────────────────────────────────────────────────────
+# Audio/Media Controls
+# ─────────────────────────────────────────────────────
+
+# Volume control
+XF86AudioRaiseVolume
+    pamixer -i 5 && ~/.config/polybar/scripts/volume_notify.sh
+
+XF86AudioLowerVolume
+    pamixer -d 5 && ~/.config/polybar/scripts/volume_notify.sh
+
+XF86AudioMute
+    pamixer -t && ~/.config/polybar/scripts/volume_notify.sh
+
+ctrl + shift + {equal,minus}
+    pamixer -{i,d} 5
+
+ctrl + shift + m
+    pamixer -t
+
+# Media controls
+XF86AudioPlay
+    playerctl play-pause
+
+XF86AudioPause
+    playerctl play-pause
+
+XF86AudioNext
+    playerctl next
+
+XF86AudioPrev
+    playerctl previous
+
+XF86AudioStop
+    playerctl stop
+
+# Brightness control
+XF86MonBrightnessUp
+    brightnessctl set +5%
+
+XF86MonBrightnessDown
+    brightnessctl set 5%-
+
+# ─────────────────────────────────────────────────────
+# Style Changer
+# ─────────────────────────────────────────────────────
+
+# Change style/theme
+super + shift + s
+    ~/.local/bin/style_changer.sh
+
+# ─────────────────────────────────────────────────────
+# Scratchpad
+# ─────────────────────────────────────────────────────
+
+# Toggle scratchpad terminal
+super + minus
+    ~/.local/bin/scratchpad.sh
+
+# ─────────────────────────────────────────────────────
+# Power Menu
+# ─────────────────────────────────────────────────────
+
+super + x
+    ~/.local/bin/powermenu.sh
