@@ -54,12 +54,11 @@ sudo apt install -y \
     dunst \
     lxappearance \
     papirus-icon-theme \
-    neofetch \
+    fastfetch \
     htop \
     ranger \
     bat \
     lsd \
-    exa \
     fzf \
     zsh \
     curl \
