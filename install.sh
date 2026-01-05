@@ -57,6 +57,7 @@ sudo apt install -y \
     htop \
     ranger \
     bat \
+    lsd \
     exa \
     fzf \
     zsh \

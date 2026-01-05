@@ -60,8 +60,44 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias ~='cd ~'
 
-# List (using exa if available)
-if command -v exa &> /dev/null; then
+# ─────────────────────────────────────────────────────────────
+# Modern CLI Tools: bat (batcat) & lsd
+# ─────────────────────────────────────────────────────────────
+
+# BAT - Better cat with syntax highlighting
+# En Debian/Kali el comando es 'batcat'
+if command -v batcat &> /dev/null; then
+    alias cat='batcat --paging=never'
+    alias bat='batcat'
+    alias batp='batcat --paging=always'
+    alias batl='batcat --style=full'
+    alias bathelp='batcat --plain --language=help'
+    # Colorizar man pages con bat
+    export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
+    export MANROFFOPT="-c"
+elif command -v bat &> /dev/null; then
+    alias cat='bat --paging=never'
+    alias batp='bat --paging=always'
+    alias batl='bat --style=full'
+    alias bathelp='bat --plain --language=help'
+    export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+    export MANROFFOPT="-c"
+fi
+
+# LSD - Modern ls with icons and colors
+if command -v lsd &> /dev/null; then
+    alias ls='lsd --group-directories-first'
+    alias ll='lsd -la --group-directories-first'
+    alias la='lsd -a --group-directories-first'
+    alias lt='lsd --tree --depth 2'
+    alias ltt='lsd --tree --depth 3'
+    alias lttt='lsd --tree --depth 4'
+    alias l='lsd -l --group-directories-first'
+    alias l.='lsd -la --group-directories-first | grep "^\."'
+    alias lsize='lsd -lS --group-directories-first'
+    alias ltime='lsd -lt --group-directories-first'
+# Fallback to exa if lsd not available
+elif command -v exa &> /dev/null; then
     alias ls='exa --icons --group-directories-first'
     alias ll='exa -lah --icons --group-directories-first'
     alias la='exa -a --icons --group-directories-first'
@@ -70,11 +106,6 @@ else
     alias ls='ls --color=auto'
     alias ll='ls -lah'
     alias la='ls -a'
-fi
-
-# Cat (using bat if available)
-if command -v bat &> /dev/null; then
-    alias cat='bat --style=auto'
 fi
 
 # Grep with color

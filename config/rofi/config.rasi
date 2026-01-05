@@ -1,87 +1,243 @@
-/* Rofi config - Minimal Working Configuration */
-/* No external theme dependencies */
+/*******************************************************************************
+ * ROFI CYBERPUNK THEME - Tokyo Night Style
+ * Professional Kali Linux Rice
+ *******************************************************************************/
 
 configuration {
-    modi: "drun,run,window";
-    show-icons: true;
-    font: "monospace 11";
-    display-drun: "Apps";
-    display-run: "Run";
-    display-window: "Windows";
-    drun-display-format: "{name}";
+    modi:                       "drun,run,window,filebrowser";
+    show-icons:                 true;
+    display-drun:               "󰀻 Apps";
+    display-run:                "󰆍 Run";
+    display-window:             "󰖯 Windows";
+    display-filebrowser:        "󰉋 Files";
+    drun-display-format:        "{name}";
+    window-format:              "{w} · {c} · {t}";
+    font:                       "JetBrainsMono Nerd Font 11";
+    icon-theme:                 "Papirus-Dark";
 }
 
+/*******************************************************************************
+ * COLOR SCHEME - Tokyo Night
+ *******************************************************************************/
 * {
-    background:     #1a1b26;
-    background-alt: #24283b;
-    foreground:     #c0caf5;
-    selected:       #7aa2f7;
-    active:         #9ece6a;
-    urgent:         #f7768e;
+    /* Main Colors */
+    bg:                         #1a1b26;
+    bg-alt:                     #16161e;
+    bg-selected:                #33467c;
+    fg:                         #c0caf5;
+    fg-alt:                     #565f89;
+    border:                     #7aa2f7;
+    urgent:                     #f7768e;
+    accent:                     #bb9af7;
+    cyan:                       #7dcfff;
+    green:                      #9ece6a;
+    
+    /* Global */
+    background-color:           transparent;
+    text-color:                 @fg;
 }
 
+/*******************************************************************************
+ * MAIN WINDOW
+ *******************************************************************************/
 window {
-    width: 500px;
-    transparency: "real";
-    background-color: @background;
-    border: 2px solid;
-    border-color: @selected;
-    border-radius: 10px;
-    padding: 15px;
+    width:                      650px;
+    transparency:               "real";
+    location:                   center;
+    anchor:                     center;
+    fullscreen:                 false;
+    enabled:                    true;
+    cursor:                     "default";
+    border:                     2px solid;
+    border-color:               @border;
+    border-radius:              16px;
+    background-color:           @bg;
 }
 
+/*******************************************************************************
+ * MAIN BOX
+ *******************************************************************************/
 mainbox {
-    background-color: transparent;
-    children: [inputbar, listview];
-    spacing: 10px;
+    enabled:                    true;
+    spacing:                    12px;
+    padding:                    24px;
+    background-color:           transparent;
+    children:                   [ "inputbar", "message", "listview", "mode-switcher" ];
 }
 
+/*******************************************************************************
+ * INPUT BAR - Search
+ *******************************************************************************/
 inputbar {
-    background-color: @background-alt;
-    border-radius: 8px;
-    padding: 10px;
-    children: [prompt, entry];
-    spacing: 10px;
+    enabled:                    true;
+    spacing:                    12px;
+    padding:                    12px 16px;
+    border-radius:              12px;
+    background-color:           @bg-alt;
+    text-color:                 @fg;
+    children:                   [ "textbox-prompt-colon", "entry" ];
 }
 
-prompt {
-    background-color: transparent;
-    text-color: @selected;
+textbox-prompt-colon {
+    enabled:                    true;
+    expand:                     false;
+    str:                        " ";
+    padding:                    0px 8px 0px 0px;
+    text-color:                 @cyan;
+    background-color:           transparent;
 }
 
 entry {
-    background-color: transparent;
-    text-color: @foreground;
-    placeholder: "Search...";
-    placeholder-color: #565f89;
+    enabled:                    true;
+    expand:                     true;
+    padding:                    0px;
+    text-color:                 inherit;
+    background-color:           transparent;
+    cursor:                     text;
+    placeholder:                "Type to search...";
+    placeholder-color:          @fg-alt;
 }
 
+/*******************************************************************************
+ * LIST VIEW
+ *******************************************************************************/
 listview {
-    background-color: transparent;
-    columns: 1;
-    lines: 8;
-    spacing: 5px;
+    enabled:                    true;
+    columns:                    1;
+    lines:                      8;
+    cycle:                      true;
+    dynamic:                    true;
+    scrollbar:                  false;
+    layout:                     vertical;
+    reverse:                    false;
+    fixed-height:               true;
+    fixed-columns:              true;
+    spacing:                    6px;
+    background-color:           transparent;
+    cursor:                     "default";
 }
 
+/*******************************************************************************
+ * ELEMENTS
+ *******************************************************************************/
 element {
-    background-color: transparent;
-    text-color: @foreground;
-    padding: 8px;
-    border-radius: 6px;
+    enabled:                    true;
+    spacing:                    12px;
+    padding:                    10px 16px;
+    border-radius:              10px;
+    background-color:           transparent;
+    text-color:                 @fg;
+    cursor:                     pointer;
 }
 
-element selected {
-    background-color: @selected;
-    text-color: @background;
+element normal.normal {
+    background-color:           transparent;
+    text-color:                 @fg;
+}
+
+element normal.urgent {
+    background-color:           @urgent;
+    text-color:                 @bg;
+}
+
+element normal.active {
+    background-color:           @accent;
+    text-color:                 @bg;
+}
+
+element selected.normal {
+    background-color:           @bg-selected;
+    text-color:                 @fg;
+    border:                     0px 0px 0px 3px solid;
+    border-color:               @cyan;
+}
+
+element selected.urgent {
+    background-color:           @urgent;
+    text-color:                 @bg;
+}
+
+element selected.active {
+    background-color:           @accent;
+    text-color:                 @bg;
+}
+
+element alternate.normal {
+    background-color:           transparent;
+    text-color:                 @fg;
 }
 
 element-icon {
-    size: 22px;
-    background-color: transparent;
+    background-color:           transparent;
+    text-color:                 inherit;
+    size:                       28px;
+    cursor:                     inherit;
 }
 
 element-text {
-    background-color: transparent;
-    text-color: inherit;
-    vertical-align: 0.5;
+    background-color:           transparent;
+    text-color:                 inherit;
+    cursor:                     inherit;
+    vertical-align:             0.5;
+    horizontal-align:           0.0;
+    highlight:                  bold @cyan;
+}
+
+/*******************************************************************************
+ * MODE SWITCHER
+ *******************************************************************************/
+mode-switcher {
+    enabled:                    true;
+    expand:                     false;
+    spacing:                    12px;
+    background-color:           transparent;
+}
+
+button {
+    padding:                    10px 20px;
+    border-radius:              10px;
+    background-color:           @bg-alt;
+    text-color:                 @fg-alt;
+    cursor:                     pointer;
+}
+
+button selected {
+    background-color:           @bg-selected;
+    text-color:                 @fg;
+}
+
+/*******************************************************************************
+ * MESSAGE
+ *******************************************************************************/
+message {
+    enabled:                    true;
+    margin:                     0px;
+    padding:                    12px;
+    border-radius:              10px;
+    background-color:           @bg-alt;
+    text-color:                 @fg;
+}
+
+textbox {
+    background-color:           transparent;
+    text-color:                 @fg;
+    vertical-align:             0.5;
+    horizontal-align:           0.0;
+}
+
+error-message {
+    padding:                    12px;
+    border-radius:              10px;
+    background-color:           @urgent;
+    text-color:                 @bg;
+}
+
+/*******************************************************************************
+ * SCROLLBAR (Hidden but styled)
+ *******************************************************************************/
+scrollbar {
+    handle-width:               5px;
+    handle-color:               @border;
+    border-radius:              10px;
+    background-color:           @bg-alt;
 }
