@@ -1,243 +1,92 @@
 /*******************************************************************************
- * ROFI CYBERPUNK THEME - Tokyo Night Style
- * Professional Kali Linux Rice
+ * ROFI - Simple Tokyo Night Theme
+ * Clean and functional
  *******************************************************************************/
 
 configuration {
-    modi:                       "drun,run,window,filebrowser";
+    modi:                       "drun,run,window";
     show-icons:                 true;
-    display-drun:               "󰀻 Apps";
-    display-run:                "󰆍 Run";
-    display-window:             "󰖯 Windows";
-    display-filebrowser:        "󰉋 Files";
+    display-drun:               " Apps";
+    display-run:                " Run";
+    display-window:             " Windows";
     drun-display-format:        "{name}";
-    window-format:              "{w} · {c} · {t}";
     font:                       "JetBrainsMono Nerd Font 11";
-    icon-theme:                 "Papirus-Dark";
 }
 
-/*******************************************************************************
- * COLOR SCHEME - Tokyo Night
- *******************************************************************************/
 * {
-    /* Main Colors */
     bg:                         #1a1b26;
-    bg-alt:                     #16161e;
-    bg-selected:                #33467c;
+    bg-alt:                     #24283b;
     fg:                         #c0caf5;
     fg-alt:                     #565f89;
-    border:                     #7aa2f7;
+    accent:                     #7aa2f7;
     urgent:                     #f7768e;
-    accent:                     #bb9af7;
-    cyan:                       #7dcfff;
-    green:                      #9ece6a;
     
-    /* Global */
     background-color:           transparent;
     text-color:                 @fg;
+    margin:                     0;
+    padding:                    0;
+    spacing:                    0;
 }
 
-/*******************************************************************************
- * MAIN WINDOW
- *******************************************************************************/
 window {
-    width:                      650px;
-    transparency:               "real";
-    location:                   center;
-    anchor:                     center;
-    fullscreen:                 false;
-    enabled:                    true;
-    cursor:                     "default";
-    border:                     2px solid;
-    border-color:               @border;
-    border-radius:              16px;
+    width:                      600px;
     background-color:           @bg;
-}
-
-/*******************************************************************************
- * MAIN BOX
- *******************************************************************************/
-mainbox {
-    enabled:                    true;
-    spacing:                    12px;
-    padding:                    24px;
-    background-color:           transparent;
-    children:                   [ "inputbar", "message", "listview", "mode-switcher" ];
-}
-
-/*******************************************************************************
- * INPUT BAR - Search
- *******************************************************************************/
-inputbar {
-    enabled:                    true;
-    spacing:                    12px;
-    padding:                    12px 16px;
+    border:                     2px;
+    border-color:               @accent;
     border-radius:              12px;
-    background-color:           @bg-alt;
-    text-color:                 @fg;
-    children:                   [ "textbox-prompt-colon", "entry" ];
 }
 
-textbox-prompt-colon {
-    enabled:                    true;
-    expand:                     false;
-    str:                        " ";
-    padding:                    0px 8px 0px 0px;
-    text-color:                 @cyan;
-    background-color:           transparent;
+mainbox {
+    children:                   [ inputbar, listview ];
+    background-color:           @bg;
+    padding:                    8px;
+}
+
+inputbar {
+    children:                   [ prompt, entry ];
+    background-color:           @bg-alt;
+    padding:                    12px;
+    border-radius:              8px;
+    margin:                     0 0 8px 0;
+}
+
+prompt {
+    background-color:           inherit;
+    text-color:                 @accent;
+    padding:                    0 8px 0 0;
 }
 
 entry {
-    enabled:                    true;
-    expand:                     true;
-    padding:                    0px;
-    text-color:                 inherit;
-    background-color:           transparent;
-    cursor:                     text;
-    placeholder:                "Type to search...";
+    background-color:           inherit;
+    text-color:                 @fg;
+    placeholder:                "Search...";
     placeholder-color:          @fg-alt;
 }
 
-/*******************************************************************************
- * LIST VIEW
- *******************************************************************************/
 listview {
-    enabled:                    true;
     columns:                    1;
     lines:                      8;
-    cycle:                      true;
-    dynamic:                    true;
-    scrollbar:                  false;
-    layout:                     vertical;
-    reverse:                    false;
-    fixed-height:               true;
-    fixed-columns:              true;
-    spacing:                    6px;
-    background-color:           transparent;
-    cursor:                     "default";
+    background-color:           @bg;
+    border:                     0;
 }
 
-/*******************************************************************************
- * ELEMENTS
- *******************************************************************************/
 element {
-    enabled:                    true;
-    spacing:                    12px;
-    padding:                    10px 16px;
-    border-radius:              10px;
+    padding:                    10px 12px;
     background-color:           transparent;
-    text-color:                 @fg;
-    cursor:                     pointer;
+    border-radius:              8px;
 }
 
-element normal.normal {
-    background-color:           transparent;
-    text-color:                 @fg;
-}
-
-element normal.urgent {
-    background-color:           @urgent;
-    text-color:                 @bg;
-}
-
-element normal.active {
-    background-color:           @accent;
-    text-color:                 @bg;
-}
-
-element selected.normal {
-    background-color:           @bg-selected;
-    text-color:                 @fg;
-    border:                     0px 0px 0px 3px solid;
-    border-color:               @cyan;
-}
-
-element selected.urgent {
-    background-color:           @urgent;
-    text-color:                 @bg;
-}
-
-element selected.active {
-    background-color:           @accent;
-    text-color:                 @bg;
-}
-
-element alternate.normal {
-    background-color:           transparent;
-    text-color:                 @fg;
+element selected {
+    background-color:           @bg-alt;
+    text-color:                 @accent;
 }
 
 element-icon {
-    background-color:           transparent;
-    text-color:                 inherit;
-    size:                       28px;
-    cursor:                     inherit;
+    size:                       24px;
+    padding:                    0 10px 0 0;
 }
 
 element-text {
-    background-color:           transparent;
     text-color:                 inherit;
-    cursor:                     inherit;
     vertical-align:             0.5;
-    horizontal-align:           0.0;
-    highlight:                  bold @cyan;
-}
-
-/*******************************************************************************
- * MODE SWITCHER
- *******************************************************************************/
-mode-switcher {
-    enabled:                    true;
-    expand:                     false;
-    spacing:                    12px;
-    background-color:           transparent;
-}
-
-button {
-    padding:                    10px 20px;
-    border-radius:              10px;
-    background-color:           @bg-alt;
-    text-color:                 @fg-alt;
-    cursor:                     pointer;
-}
-
-button selected {
-    background-color:           @bg-selected;
-    text-color:                 @fg;
-}
-
-/*******************************************************************************
- * MESSAGE
- *******************************************************************************/
-message {
-    enabled:                    true;
-    margin:                     0px;
-    padding:                    12px;
-    border-radius:              10px;
-    background-color:           @bg-alt;
-    text-color:                 @fg;
-}
-
-textbox {
-    background-color:           transparent;
-    text-color:                 @fg;
-    vertical-align:             0.5;
-    horizontal-align:           0.0;
-}
-
-error-message {
-    padding:                    12px;
-    border-radius:              10px;
-    background-color:           @urgent;
-    text-color:                 @bg;
-}
-
-/*******************************************************************************
- * SCROLLBAR (Hidden but styled)
- *******************************************************************************/
-scrollbar {
-    handle-width:               5px;
-    handle-color:               @border;
-    border-radius:              10px;
-    background-color:           @bg-alt;
 }
