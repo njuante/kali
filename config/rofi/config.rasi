@@ -1,10 +1,74 @@
 configuration {
     modi: "drun,run,window";
     show-icons: true;
-    icon-theme: "Papirus";
-    font: "JetBrainsMono Nerd Font 11";
+    font: "Sans 11";
     drun-display-format: "{name}";
     terminal: "kitty";
 }
 
-@theme "~/.config/rofi/themes/cyberpunk.rasi"
+* {
+    bg:         #1a1b26;
+    bg-alt:     #24283b;
+    fg:         #c0caf5;
+    accent:     #7aa2f7;
+    urgent:     #f7768e;
+    
+    background-color: transparent;
+    text-color: @fg;
+}
+
+window {
+    width: 500px;
+    background-color: @bg;
+    border: 2px;
+    border-color: @accent;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+mainbox {
+    spacing: 15px;
+    children: [inputbar, listview];
+}
+
+inputbar {
+    background-color: @bg-alt;
+    border-radius: 8px;
+    padding: 12px;
+    spacing: 10px;
+    children: [prompt, entry];
+}
+
+prompt {
+    text-color: @accent;
+}
+
+entry {
+    placeholder: "Buscar...";
+    placeholder-color: #565f89;
+}
+
+listview {
+    lines: 8;
+    spacing: 5px;
+    fixed-height: true;
+}
+
+element {
+    padding: 10px;
+    border-radius: 6px;
+}
+
+element selected {
+    background-color: @accent;
+    text-color: @bg;
+}
+
+element-text {
+    vertical-align: 0.5;
+}
+
+element-icon {
+    size: 24px;
+    margin: 0 10px 0 0;
+}
