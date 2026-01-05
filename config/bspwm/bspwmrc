@@ -14,8 +14,8 @@ bspc monitor -d 1 2 3 4 5 6 7 8 9 10
 # Configuración Global de BSPWM
 # ─────────────────────────────────────────────────────
 bspc config border_width            2
-bspc config window_gap              10
-bspc config top_padding             40
+bspc config window_gap              8
+bspc config top_padding             30
 bspc config bottom_padding          5
 bspc config left_padding            5
 bspc config right_padding           5
@@ -23,12 +23,18 @@ bspc config right_padding           5
 bspc config split_ratio             0.52
 bspc config borderless_monocle      true
 bspc config gapless_monocle         true
-bspc config focus_follows_pointer   true
+bspc config single_monocle          true
+
+# IMPORTANTE: Desactivar focus_follows_pointer puede mejorar rendimiento
+bspc config focus_follows_pointer   false
 bspc config pointer_follows_focus   false
-bspc config pointer_follows_monitor true
+bspc config pointer_follows_monitor false
 
 bspc config remove_disabled_monitors    true
 bspc config remove_unplugged_monitors   true
+
+# Reducir carga de eventos
+bspc config ignore_ewmh_focus       true
 
 # ─────────────────────────────────────────────────────
 # Colores de Bordes
@@ -51,35 +57,39 @@ bspc rule -a feh state=floating
 bspc rule -a mpv state=floating
 
 # ─────────────────────────────────────────────────────
-# Autostart
+# Autostart - OPTIMIZADO
 # ─────────────────────────────────────────────────────
 
-# Matar procesos previos
-killall -q sxhkd polybar picom dunst 2>/dev/null
+# Matar procesos previos de forma segura
+killall -q sxhkd 2>/dev/null
+killall -q polybar 2>/dev/null
+killall -q picom 2>/dev/null
+killall -q dunst 2>/dev/null
 
-# Esperar
-sleep 0.5
+# Esperar a que terminen
+sleep 0.3
 
 # Cursor
 xsetroot -cursor_name left_ptr &
 
-# SXHKD - Hotkeys (MUY IMPORTANTE)
+# SXHKD - Hotkeys (ESENCIAL)
 sxhkd &
 
-# Compositor con config (bordes redondeados)
-picom --config $HOME/.config/picom/picom.conf -b &
+# Picom - Solo si quieres bordes redondeados
+# COMENTA ESTA LÍNEA SI SIGUE LENTO:
+picom --config $HOME/.config/picom/picom.conf &
 
 # Polybar
 $HOME/.config/polybar/launch.sh &
 
-# Dunst
-dunst &
+# Dunst (notificaciones - opcional)
+# dunst &
 
 # Wallpaper
 if [ -f "$HOME/wallpapers/2151158655.jpg" ]; then
-    feh --bg-fill "$HOME/wallpapers/2151158655.jpg"
+    feh --bg-fill "$HOME/wallpapers/2151158655.jpg" &
 elif [ -f "$HOME/wallpapers/2151160587.jpg" ]; then
-    feh --bg-fill "$HOME/wallpapers/2151160587.jpg"
+    feh --bg-fill "$HOME/wallpapers/2151160587.jpg" &
 fi
 
 # Policy Kit
